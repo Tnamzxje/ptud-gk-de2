@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Task Management System - IUH</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/fontawesome.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/templatemo-lugx-gaming.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/owl.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animate.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@7/swiper-bundle.min.css"
+    />
+    <style>
+      .pagination-btn {
+        border-radius: 8px;
+        padding: 8px 20px;
+        border: 1px solid #667eea;
+        color: #667eea;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        margin: 0 5px;
+      }
+      .pagination-btn:hover {
+        background: #667eea;
+        color: white;
+      }
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+      .task-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+      }
+      .task-card:hover {
+        transform: translateY(-5px);
+      }
+      .task-status {
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.8em;
+        font-weight: 500;
+      }
+      .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+      .status-in_progress {
+        background-color: #cce5ff;
+        color: #004085;
+      }
+      .status-completed {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .task-meta {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #eee;
+      }
+      .stats-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .stats-card h5 {
+        color: #333;
+        font-weight: 600;
+      }
+      .badge {
+        padding: 8px 12px;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header-area header-sticky">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <a href="{{ url_for('home') }}" class="logo">
+                <img
+                  src="{{ url_for('static', filename='images/logo.png') }}"
+                  alt="IUH Logo"
+                  style="width: 158px"
+                />
+              </a>
+              <ul class="nav">
+                <li>
+                  <a href="{{ url_for('home') }}" class="active">Trang chủ</a>
+                </li>
+                <li><a href="{{ url_for('tasks') }}">Công việc</a></li>
+                {% if user and user.is_admin %}
+                <li><a href="{{ url_for('admin') }}">Quản trị</a></li>
+                <li><a href="{{ url_for('categories') }}">Danh mục</a></li>
+                {% endif %} {% if user %}
+                <li>
+                  <a href="#" class="d-flex align-items-center">
+                    <img
+                      src="{{ user.avatar_url or 'https://avatar-placeholder.iran.liara.run/user' }}"
+                      alt="{{ user.username }}"
+                      class="user-avatar"
+                    />
+                    {{ user.username }}
+                  </a>
+                </li>
+                <li><a href="{{ url_for('logout') }}">Đăng xuất</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}">Đăng nhập</a></li>
+                <li><a href="{{ url_for('register') }}">Đăng ký</a></li>
+                {% endif %}
+              </ul>
+              <a class="menu-trigger">
+                <span>Menu</span>
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Banner -->
+    <div class="main-banner">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 align-self-center">
+            <div class="caption header-text">
+              {% if user %}
+              <div class="mb-3 text-white">
+                <strong>Xin chào, {{ user.username }}!</strong>
+                <br />
+              </div>
+              {% endif %}
+              <h6>Chào mừng đến với Hệ thống Quản lý Công việc</h6>
+              <h2>Quản lý Công việc Hiệu quả</h2>
+              <p>
+                Theo dõi công việc, thiết lập thời hạn và tổ chức công việc của
+                bạn với hệ thống quản lý công việc dễ sử dụng của chúng tôi.
+              </p>
+            </div>
+          </div>
+          <div class="col-lg-4 offset-lg-2">
+            {% with messages = get_flashed_messages() %} {% if messages %}
+            <div class="alert alert-info">
+              {% for message in messages %}
+              <div>{{ message }}</div>
+              {% endfor %}
+            </div>
+            {% endif %} {% endwith %}
+            <div class="right-image">
+              <img src="/static/images/iuh-banner-new.JPG" alt="IUH Banner" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task Overview Section -->
+    <div class="container bg-light my-4">
+      <div class="row">
+        <!-- Main Task List -->
+        <div class="col-md-8">
+          <h3 class="mb-4">Công việc của bạn</h3>
+          {% if tasks %}
+          <div class="row">
+            {% for task in tasks %}
+            <div class="col-md-4 mb-4">
+              <div class="task-card h-100">
+                <div
+                  class="d-flex justify-content-between align-items-start mb-3"
+                >
+                  <h5 class="card-title mb-0">{{ task.title }}</h5>
+                  <span class="task-status status-{{ task.status }}">
+                    {% if task.status == 'pending' %} Chờ xử lý {% elif
+                    task.status == 'in_progress' %} Đang thực hiện {% else %}
+                    Hoàn thành {% endif %}
+                  </span>
+                </div>
+                <p class="card-text text-muted">
+                  {{ task.description[:100] }}{% if task.description|length >
+                  100 %}...{% endif %}
+                </p>
+                <div class="task-meta">
+                  <small class="text-muted">
+                    <i class="fas fa-calendar"></i> Hạn nộp: {{
+                    task.due_date.strftime('%d/%m/%Y %H:%M') }}
+                  </small>
+                  {% if task.category %}
+                  <small class="text-muted ms-3">
+                    <i class="fas fa-folder"></i> {{ task.category.name }}
+                  </small>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="alert alert-info">
+            Chưa có công việc nào. Tạo công việc đầu tiên để bắt đầu!
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Sidebar: Task Statistics -->
+        <div class="col-md-4">
+          <div class="stats-card">
+            <h5 class="mb-3">Thống kê công việc</h5>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span>Tổng số công việc:</span>
+              <span class="badge bg-primary">{{ tasks|length }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <span>Công việc quá hạn:</span>
+              <span class="badge bg-danger">{{ overdue_count }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <span>Danh mục:</span>
+              <span class="badge bg-success">{{ categories|length }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="col-lg-12">
+          <p>
+            Copyright © 2024 Trường Đại học Công nghiệp TP.HCM (IUH). Mọi quyền
+            được bảo lưu. Thiết kế bởi
+            <a href="#">Nguyễn Đinh Trung Nam_22632561</a>.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/isotope.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl-carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script src="https://sf-cdn.coze.com/obj/unpkg-va/flow-platform/chat-app-sdk/1.2.0-beta.3/libs/oversea/index.js"></script>
+  </body>
+</html>

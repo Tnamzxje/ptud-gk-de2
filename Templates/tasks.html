@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Quản lý Công việc - Danh sách công việc</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/fontawesome.css') }}"
+    />
+    <style>
+      body {
+        background-color: #e9ecef;
+        font-family: "Poppins", sans-serif;
+      }
+      .container {
+        max-width: 1200px;
+      }
+      .card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .back-home {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4b6cb7;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .back-home i {
+        margin-right: 5px;
+      }
+      .back-home:hover {
+        background-color: #3b5aa7;
+        color: white;
+        transform: translateY(-2px);
+      }
+      .back-home:active {
+        transform: translateY(0);
+      }
+      .table {
+        margin-bottom: 0;
+        background-color: #ffffff;
+      }
+      .table th {
+        border-top: none;
+        background-color: #e9ecef;
+        font-weight: 600;
+        color: #4b6cb7;
+        border-bottom: 2px solid #dee2e6;
+        padding: 15px 10px;
+      }
+      .table td {
+        vertical-align: middle;
+        border-bottom: 1px solid #dee2e6;
+        padding: 12px 10px;
+      }
+      .btn-sm {
+        padding: 5px 12px;
+        font-size: 0.875rem;
+      }
+      .btn i {
+        margin-right: 4px;
+      }
+      .card-header {
+        background-color: #e9ecef;
+        border-bottom: 2px solid #dee2e6;
+        padding: 15px 20px;
+      }
+      .card-header h3 {
+        margin: 0;
+        color: #4b6cb7;
+        font-weight: 600;
+      }
+      .card-body {
+        padding: 20px;
+        background-color: #ffffff;
+      }
+      .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #ffffff;
+      }
+      .table tbody tr:hover {
+        background-color: #f8f9fa;
+      }
+      .btn-group {
+        display: flex;
+        gap: 8px;
+      }
+      .btn-primary {
+        background-color: #4b6cb7;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background-color: #3b5aa7;
+        transform: translateY(-2px);
+      }
+      .btn-success {
+        background-color: #48bb78;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      .btn-success:hover {
+        background-color: #38a169;
+        transform: translateY(-2px);
+      }
+      .alert-info {
+        background-color: #e8f0fe;
+        border-left: 4px solid #4b6cb7;
+        color: #4b6cb7;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+      }
+      .input-group .form-control {
+        border: 1px solid #dee2e6;
+        border-radius: 8px 0 0 8px;
+        padding: 10px 15px;
+      }
+      .input-group .btn {
+        border-radius: 0 8px 8px 0;
+        padding: 10px 20px;
+      }
+      h2 {
+        color: #4b6cb7;
+        font-weight: 600;
+        margin-bottom: 25px;
+      }
+      .form-control:focus {
+        border-color: #4b6cb7;
+        box-shadow: 0 0 0 0.2rem rgba(75, 108, 183, 0.25);
+      }
+      .task-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      .task-status.pending {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+      .task-status.in-progress {
+        background-color: #cce5ff;
+        color: #004085;
+      }
+      .task-status.completed {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .task-description {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .form-label {
+        color: #4b6cb7;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      .form-control {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 10px 15px;
+      }
+      select.form-control {
+        background-color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <a
+        href="{{ url_for('home') }}"
+        class="back-home"
+        onclick="goToHome(event)"
+      >
+        <i class="fas fa-home"></i> Trở về trang chủ
+      </a>
+    </div>
+
+    <div class="container my-5">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert alert-info">
+        {% for message in messages %}
+        <div>{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+
+      <h2 class="mb-4">Quản lý Công việc</h2>
+
+      <!-- Form tạo công việc mới -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="mb-0">Tạo công việc mới</h3>
+        </div>
+        <div class="card-body">
+          <form method="POST" action="{{ url_for('tasks') }}">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="title" class="form-label">Tên công việc</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                  required
+                  placeholder="Nhập tên công việc"
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="category_id" class="form-label">Danh mục</label>
+                <select
+                  class="form-control"
+                  id="category_id"
+                  name="category_id"
+                >
+                  <option value="">Chọn danh mục</option>
+                  {% for category in categories %}
+                  <option value="{{ category.id }}">{{ category.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Mô tả</label>
+              <textarea
+                class="form-control"
+                id="description"
+                name="description"
+                rows="3"
+                placeholder="Nhập mô tả chi tiết về công việc"
+              ></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="due_date" class="form-label">Ngày hạn nộp</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="due_date"
+                  name="due_date"
+                  required
+                />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="due_time" class="form-label">Giờ hạn nộp</label>
+                <input
+                  type="time"
+                  class="form-control"
+                  id="due_time"
+                  name="due_time"
+                  required
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-plus"></i> Tạo công việc
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Danh sách công việc -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Danh sách công việc</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Tên công việc</th>
+                  <th>Người thực hiện</th>
+                  <th>Danh mục</th>
+                  <th>Mô tả</th>
+                  <th>Hạn nộp</th>
+                  <th>Trạng thái</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks %}
+                <tr>
+                  <td>{{ task.title }}</td>
+                  <td>{{ task.user.username }}</td>
+                  <td>
+                    {{ task.category.name if task.category else 'Không có' }}
+                  </td>
+                  <td class="task-description">
+                    {{ task.description or 'Không có' }}
+                  </td>
+                  <td>
+                    {{ task.due_date.strftime('%d/%m/%Y %H:%M') if task.due_date
+                    else 'Không có' }}
+                  </td>
+                  <td>
+                    <span class="task-status {{ task.status }}">
+                      {% if task.status == 'pending' %} Chờ xử lý {% elif
+                      task.status == 'in-progress' %} Đang thực hiện {% else %}
+                      Hoàn thành {% endif %}
+                    </span>
+                    {% if task.status != 'completed' %}
+                    <a
+                      href="{{ url_for('complete_task', task_id=task.id) }}"
+                      class="btn btn-success btn-sm ms-2"
+                    >
+                      <i class="fas fa-check"></i> Hoàn thành
+                    </a>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="6" class="text-center">
+                    Chưa có công việc nào.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script>
+      function goToHome(event) {
+        event.preventDefault();
+        window.location.href = "{{ url_for('home') }}";
+      }
+    </script>
+  </body>
+</html>

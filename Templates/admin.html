@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Quản trị Hệ thống</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/fontawesome.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/templatemo-lugx-gaming.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/owl.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animate.css') }}"
+    />
+    <style>
+      body {
+        background-color: #e9ecef;
+        font-family: "Poppins", sans-serif;
+      }
+      .container {
+        max-width: 1200px;
+      }
+      .admin-card {
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .stats-card {
+        background: linear-gradient(135deg, #4b6cb7, #182848);
+        color: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .user-avatar-container {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 2px solid #e2e8f0;
+        background-color: #ffffff;
+      }
+      .user-avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .back-home {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4b6cb7;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      .back-home i {
+        margin-right: 5px;
+      }
+      .back-home:hover {
+        background-color: #3b5aa7;
+        color: white;
+        transform: translateY(-2px);
+      }
+      .back-home:active {
+        transform: translateY(0);
+      }
+      .table {
+        margin-bottom: 0;
+        background-color: #ffffff;
+      }
+      .table th {
+        border-top: none;
+        background-color: #e9ecef;
+        font-weight: 600;
+        color: #4b6cb7;
+        border-bottom: 2px solid #dee2e6;
+        padding: 15px 10px;
+      }
+      .table td {
+        vertical-align: middle;
+        border-bottom: 1px solid #dee2e6;
+        padding: 12px 10px;
+      }
+      .badge {
+        padding: 6px 12px;
+        font-weight: 500;
+      }
+      .badge.bg-success {
+        background-color: #48bb78 !important;
+      }
+      .badge.bg-secondary {
+        background-color: #718096 !important;
+      }
+      .btn-sm {
+        padding: 5px 12px;
+        font-size: 0.875rem;
+      }
+      .btn i {
+        margin-right: 4px;
+      }
+      .card {
+        border: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: #ffffff;
+        margin-bottom: 30px;
+      }
+      .card-header {
+        background-color: #e9ecef;
+        border-bottom: 2px solid #dee2e6;
+        padding: 15px 20px;
+      }
+      .card-header h3 {
+        margin: 0;
+        color: #4b6cb7;
+        font-weight: 600;
+      }
+      .card-body {
+        padding: 20px;
+        background-color: #ffffff;
+      }
+      .table-responsive {
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: #ffffff;
+      }
+      .table tbody tr:hover {
+        background-color: #f8f9fa;
+      }
+      .btn-group {
+        display: flex;
+        gap: 8px;
+      }
+      .btn-primary {
+        background-color: #4b6cb7;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background-color: #3b5aa7;
+        transform: translateY(-2px);
+      }
+      .btn-danger {
+        background-color: #e53e3e;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      .btn-danger:hover {
+        background-color: #c53030;
+        transform: translateY(-2px);
+      }
+      .alert-info {
+        background-color: #e8f0fe;
+        border-left: 4px solid #4b6cb7;
+        color: #4b6cb7;
+        padding: 15px 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+      }
+      .input-group .form-control {
+        border: 1px solid #dee2e6;
+        border-radius: 8px 0 0 8px;
+        padding: 10px 15px;
+      }
+      .input-group .btn {
+        border-radius: 0 8px 8px 0;
+        padding: 10px 20px;
+      }
+      h2 {
+        color: #4b6cb7;
+        font-weight: 600;
+        margin-bottom: 25px;
+      }
+      .card-title {
+        color: #4b6cb7;
+        font-weight: 600;
+      }
+      .display-4 {
+        color: #2d3748;
+        font-weight: 600;
+      }
+      .form-control:focus {
+        border-color: #4b6cb7;
+        box-shadow: 0 0 0 0.2rem rgba(75, 108, 183, 0.25);
+      }
+      .nav a {
+        color: #4b6cb7;
+      }
+      .nav a:hover {
+        color: #3b5aa7;
+      }
+      .nav a.active {
+        color: #3b5aa7;
+        font-weight: 600;
+      }
+      .stats-section {
+        margin-bottom: 30px;
+      }
+      .stats-section .card {
+        transition: all 0.3s ease;
+      }
+      .stats-section .card:hover {
+        transform: translateY(-5px);
+      }
+      .stats-section .card-body {
+        text-align: center;
+      }
+      .stats-section .card-title {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+      }
+      .stats-section .display-4 {
+        font-size: 2.5rem;
+        margin-bottom: 0;
+      }
+      .nav-tabs {
+        border-bottom: 2px solid #dee2e6;
+        margin-bottom: 20px;
+      }
+      .nav-tabs .nav-link {
+        color: #4b6cb7;
+        border: none;
+        padding: 10px 20px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      .nav-tabs .nav-link:hover {
+        color: #3b5aa7;
+        border: none;
+      }
+      .nav-tabs .nav-link.active {
+        color: #3b5aa7;
+        border: none;
+        border-bottom: 2px solid #4b6cb7;
+      }
+      .task-status {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+      .task-status.pending {
+        background-color: #fff3cd;
+        color: #856404;
+      }
+      .task-status.in-progress {
+        background-color: #cce5ff;
+        color: #004085;
+      }
+      .task-status.completed {
+        background-color: #d4edda;
+        color: #155724;
+      }
+      .task-description {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .user-tasks {
+        margin-top: 20px;
+      }
+      .user-tasks .card {
+        margin-bottom: 30px;
+      }
+      .user-tasks .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .user-tasks .card-header h3 {
+        margin: 0;
+      }
+      .user-tasks .card-header .badge {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <a
+        href="{{ url_for('home') }}"
+        class="back-home"
+        onclick="goToHome(event)"
+      >
+        <i class="fas fa-home"></i> Trở về trang chủ
+      </a>
+    </div>
+
+    <header class="header-area header-sticky">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <ul class="nav">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('tasks') }}">Tasks</a></li>
+                {% if user and user.is_admin %}
+                <li>
+                  <a href="{{ url_for('admin') }}" class="active">Admin</a>
+                </li>
+                <li><a href="{{ url_for('categories') }}">Categories</a></li>
+                {% endif %} {% if user %}
+                <li><a href="{{ url_for('logout') }}">Đăng xuất</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}">Đăng nhập</a></li>
+                <li><a href="{{ url_for('register') }}">Đăng ký</a></li>
+                {% endif %}
+              </ul>
+              <a class="menu-trigger">
+                <span>Menu</span>
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container my-5">
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div class="alert alert-info">
+        {% for message in messages %}
+        <div>{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+
+      <h2 class="mb-4">Quản trị Hệ thống</h2>
+
+      <!-- Thống kê tổng quan -->
+      <div class="stats-section">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Tổng số người dùng</h5>
+                <p class="card-text display-4">{{ users|length }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Tổng số danh mục</h5>
+                <p class="card-text display-4">{{ categories|length }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Tổng số công việc</h5>
+                <p class="card-text display-4">{{ total_tasks }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation -->
+      <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="users-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#users"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-users"></i> Quản lý người dùng
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="tasks-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#tasks"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-tasks"></i> Công việc người dùng
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="categories-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#categories"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-folder"></i> Quản lý danh mục
+          </button>
+        </li>
+      </ul>
+
+      <!-- Tab Content -->
+      <div class="tab-content" id="adminTabsContent">
+        <!-- Users Tab -->
+        <div class="tab-pane fade show active" id="users" role="tabpanel">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="mb-0">Quản lý người dùng</h3>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Avatar</th>
+                      <th>Tên đăng nhập</th>
+                      <th>Quyền quản trị</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for user in users %}
+                    <tr>
+                      <td>
+                        <div class="user-avatar-container">
+                          <img
+                            src="{{ user.avatar_url if user.avatar_url else url_for('static', filename='images/default-avatar.png') }}"
+                            alt="Avatar của {{ user.username }}"
+                            class="user-avatar"
+                          />
+                        </div>
+                      </td>
+                      <td>{{ user.username }}</td>
+                      <td>
+                        {% if user.is_admin %}
+                        <span class="badge bg-success">Có</span>
+                        {% else %}
+                        <span class="badge bg-secondary">Không</span>
+                        {% endif %}
+                      </td>
+                      <td>
+                        <a
+                          href="{{ url_for('edit_user', user_id=user.id) }}"
+                          class="btn btn-primary btn-sm"
+                        >
+                          <i class="fas fa-edit"></i> Sửa
+                        </a>
+                        {% if user.id != current_user.id %}
+                        <a
+                          href="{{ url_for('delete_user', user_id=user.id) }}"
+                          class="btn btn-danger btn-sm"
+                          onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')"
+                        >
+                          <i class="fas fa-trash"></i> Xóa
+                        </a>
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tasks Tab -->
+        <div class="tab-pane fade" id="tasks" role="tabpanel">
+          <div class="user-tasks">
+            {% for user in users %}
+            <div class="card">
+              <div class="card-header">
+                <h3 class="mb-0">
+                  <i class="fas fa-user"></i> {{ user.username }}
+                </h3>
+                <span class="badge bg-primary"
+                  >{{ user.tasks|length }} công việc</span
+                >
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Tiêu đề</th>
+                        <th>Danh mục</th>
+                        <th>Mô tả</th>
+                        <th>Hạn chót</th>
+                        <th>Trạng thái</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for task in user.tasks %}
+                      <tr>
+                        <td>{{ task.title }}</td>
+                        <td>
+                          {{ task.category.name if task.category else 'Không có'
+                          }}
+                        </td>
+                        <td class="task-description">
+                          {{ task.description or 'Không có' }}
+                        </td>
+                        <td>
+                          {{ task.due_date.strftime('%d/%m/%Y %H:%M') if
+                          task.due_date else 'Không có' }}
+                        </td>
+                        <td>
+                          <span class="task-status {{ task.status }}">
+                            {% if task.status == 'pending' %} Chờ xử lý {% elif
+                            task.status == 'in-progress' %} Đang thực hiện {%
+                            else %} Hoàn thành {% endif %}
+                          </span>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Categories Tab -->
+        <div class="tab-pane fade" id="categories" role="tabpanel">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="mb-0">Quản lý danh mục</h3>
+            </div>
+            <div class="card-body">
+              <form
+                method="POST"
+                action="{{ url_for('categories') }}"
+                class="mb-4"
+              >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="name"
+                    class="form-control"
+                    placeholder="Tên danh mục mới"
+                    required
+                  />
+                  <button type="submit" class="btn btn-primary">
+                    Thêm danh mục
+                  </button>
+                </div>
+              </form>
+
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Tên danh mục</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for category in categories %}
+                    <tr>
+                      <td>{{ category.name }}</td>
+                      <td>
+                        <a
+                          href="{{ url_for('edit_category', category_id=category.id) }}"
+                          class="btn btn-primary btn-sm"
+                          >Sửa</a
+                        >
+                        <a
+                          href="{{ url_for('delete_category', category_id=category.id) }}"
+                          class="btn btn-danger btn-sm"
+                          onclick="return confirm('Bạn có chắc chắn muốn xóa danh mục này?')"
+                          >Xóa</a
+                        >
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/isotope.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/owl-carousel.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/counter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+    <script>
+      function goToHome(event) {
+        event.preventDefault();
+        window.location.href = "{{ url_for('home') }}";
+      }
+    </script>
+  </body>
+</html>

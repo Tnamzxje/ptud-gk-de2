@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Chỉnh sửa danh mục</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/fontawesome.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/templatemo-lugx-gaming.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/owl.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animate.css') }}"
+    />
+    <style>
+      .edit-form {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        margin-top: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header-area header-sticky">
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <nav class="main-nav">
+              <ul class="nav">
+                <li>
+                  <a href="{{ url_for('home') }}"
+                    ><i class="fas fa-home"></i> Trang chủ</a
+                  >
+                </li>
+                <li><a href="{{ url_for('tasks') }}">Tasks</a></li>
+                {% if user and user.is_admin %}
+                <li>
+                  <a href="{{ url_for('admin') }}" class="active">Admin</a>
+                </li>
+                <li><a href="{{ url_for('categories') }}">Categories</a></li>
+                {% endif %} {% if user %}
+                <li><a href="{{ url_for('logout') }}">Đăng xuất</a></li>
+                {% else %}
+                <li><a href="{{ url_for('login') }}">Đăng nhập</a></li>
+                <li><a href="{{ url_for('register') }}">Đăng ký</a></li>
+                {% endif %}
+              </ul>
+              <a class="menu-trigger">
+                <span>Menu</span>
+              </a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container my-5">
+      <h2 class="mb-4">Chỉnh sửa danh mục</h2>
+
+      <div class="card">
+        <div class="card-body">
+          <form method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">Tên danh mục</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                value="{{ category.name }}"
+                required
+              />
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <a href="{{ url_for('admin') }}" class="btn btn-secondary"
+                >Quay lại</a
+              >
+              <button type="submit" class="btn btn-primary">
+                Lưu thay đổi
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+  </body>
+</html>
