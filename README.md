@@ -44,7 +44,7 @@ Dự án "Flask Tiny App" là một ứng dụng web đơn giản, kết hợp g
 ## Hướng dẫn cài đặt và chạy
 1. **Clone repository:**
    ```bash
-   git clone https://github.com/ben2xx4/fask-tiny-app.git
+   https://github.com/Tnamzxje/ptud-gk-de2.git
    cd fask-tiny-app
    ```
 
