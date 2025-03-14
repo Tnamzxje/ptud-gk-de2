@@ -91,7 +91,6 @@ Dự án "Flask Tiny App" là một ứng dụng web đơn giản, kết hợp g
 ## Cấu trúc thư mục
 
 ```
-flask-tiny-app/
 ├── app.py              # File chính của ứng dụng
 ├── requirements.txt    # Các thư viện cần thiết
 ├── migrations/        # Thư mục chứa các file migration database
