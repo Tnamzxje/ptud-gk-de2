@@ -1,4 +1,4 @@
-# Flask Tiny App
+# GK ĐỀ 2
 
 ## Thông tin cá nhân
 
@@ -7,7 +7,7 @@
 
 ## Mô tả dự án
 
-Dự án "Flask Tiny App" là một ứng dụng web đơn giản, kết hợp giữa Blog và To Do List được phát triển bằng Flask Framework. Ứng dụng cung cấp các chức năng:
+Tạo website quản lí công việc cho người dùng. Ứng dụng cung cấp các chức năng:
 
 ### Chức năng người dùng
 
