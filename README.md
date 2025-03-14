@@ -45,7 +45,7 @@ Dự án "Flask Tiny App" là một ứng dụng web đơn giản, kết hợp g
 1. **Clone repository:**
    ```bash
    https://github.com/Tnamzxje/ptud-gk-de2.git
-   cd fask-tiny-app
+   cd ptud-gk-de2
    ```
 
 2. **Tạo và kích hoạt virtual environment:**
