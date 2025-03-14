@@ -42,49 +42,51 @@ Dự án "Flask Tiny App" là một ứng dụng web đơn giản, kết hợp g
 - **File Upload:** Flask-Upload
 
 ## Hướng dẫn cài đặt và chạy
-
 1. **Clone repository:**
-
    ```bash
-   git clone https://github.com/Tnamzxje/ptud-gk-de2.git
-   cd ptud-gk-de2
+   git clone https://github.com/ben2xx4/fask-tiny-app.git
+   cd fask-tiny-app
    ```
 
-2. **Tạo và kích hoạt môi trường ảo:**
-
+2. **Tạo và kích hoạt virtual environment:**
    ```bash
-   # Windows
    python -m venv venv
+   source venv/bin/activate   # Trên Linux/MacOS
+   # hoặc trên Windows:
    venv\Scripts\activate
-
-   # Linux/Mac
-   python3 -m venv venv
-   source venv/bin/activate
    ```
 
 3. **Cài đặt các thư viện cần thiết:**
-
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Khởi tạo database:**
-
+4. **Khởi tạo cơ sở dữ liệu và chạy migrations (nếu sử dụng Flask-Migrate):**
    ```bash
+   flask db init
+   flask db migrate
    flask db upgrade
    ```
 
 5. **Chạy ứng dụng:**
-
    ```bash
-   flask run
+   python app.py
    ```
 
 6. **Truy cập ứng dụng:**
-   - Mở trình duyệt và truy cập: http://localhost:5000
+   Mở trình duyệt và truy cập địa chỉ: [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+## Ghi chú
+- Yêu cầu: Python 3.6+  
+- Thư mục **static/avatars** dùng để lưu trữ ảnh đại diện người dùng.  
+- Ứng dụng đã được triển khai các chức năng quản lý công việc, phân loại công việc và các chức năng quản trị người dùng.
+
+---
+
+6. **Truy cập ứng dụng:**
    - Tài khoản admin mặc định:
      - Username: admin
-     - Password: admin123
+     - Password: admin
 
 ## Cấu trúc thư mục
 
